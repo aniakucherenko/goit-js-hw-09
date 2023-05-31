@@ -8,10 +8,11 @@ const hour = document.querySelector('[data-hours]');
 const minute = document.querySelector('[data-minutes]');
 const second = document.querySelector('[data-seconds]');
 const timer = document.querySelector('.timer');
-// timer.style.display = 'flex';
-// timer.style.gap = '20px';
-// timer.style.marginTop = '30px';
-// timer.style.fontSize = '20px';
+console.log(timer);
+timer.style.display = 'flex';
+timer.style.gap = '20px';
+timer.style.marginTop = '30px';
+timer.style.fontSize = '20px';
 
 startBtn.disabled = true;
 let intervalId = null;
@@ -26,7 +27,7 @@ const options = {
     console.log(selectedDates[0]);
     if (selectedDates[0] < new Date()) {
       startBtn.disabled = true;
-      Notify.failure('Please choose a date in the future');
+      alert('Please choose a date in the future');
       return;
     }
 
@@ -52,7 +53,7 @@ startBtn.addEventListener('click', () => {
 
     if (timerTime <= 1000) {
       clearInterval(intervalId);
-      Notify.success('Countdown finished');
+      alert('Countdown finished');
       picker.disabled = false;
     }
   }, 1000);
@@ -64,9 +65,15 @@ function convertMs(ms) {
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
-  const days = Math.floor(ms / day);
-  const hours = Math.floor((ms % day) / hour);
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const days = addLeadingZero(Math.floor(ms / day));
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
   return { days, hours, minutes, seconds };
+}
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
 }

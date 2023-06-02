@@ -34,8 +34,12 @@ function startBtnClick() {
   function colorChanger() {
     body.style.backgroundColor = getRandomHexColor();
   }
+  startBtn.disabled = true;
 }
 
 stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
+  startBtn.disabled = false;
 });
+stopBtn.disabled = false;
+// startBtn.disabled = true;
